@@ -264,7 +264,7 @@ android {
         applicationId = "com.eliav.spotify"
         minSdk = 24
         targetSdk = 37
-        versionCode = 200
+        versionCode = 210
         versionName = appVersion
 
         // Optional ARM64-only build: pass -Parm64Only to Gradle.
