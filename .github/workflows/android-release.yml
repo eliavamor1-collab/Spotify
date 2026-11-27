@@ -24,12 +24,12 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Install SDK components
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
         run: |
-          yes | sdkmanager --licenses > /dev/null || true
+          export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
           sdkmanager --install "platform-tools" "platforms;android-37" "build-tools;36.1.0" "ndk;30.0.16248370" "cmake;4.1.2"
 
       - name: Decode signing keystore
@@ -37,6 +37,7 @@ jobs:
 
       - name: Build release APK
         env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
           KEYSTORE_PATH: ${{ github.workspace }}/spotify-release.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
