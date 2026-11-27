@@ -30,7 +30,8 @@ jobs:
         run: |
           export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
           yes | sdkmanager --licenses > /dev/null 2>&1 || true
-          sdkmanager --install "platform-tools" "platforms;android-37" "build-tools;36.1.0" "ndk;30.0.16248370" "cmake;4.1.2"
+          sdkmanager --install "platform-tools" "build-tools;36.1.0" "ndk;30.0.16248370" "cmake;4.1.2" || true
+          sdkmanager --install "platforms;android-37.1" || true
 
       - name: Decode signing keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > spotify-release.jks
