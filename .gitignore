@@ -99,3 +99,4 @@ HANDOFF.md
 keystore.properties
 *.apk
 *.aab
+*.idsig
