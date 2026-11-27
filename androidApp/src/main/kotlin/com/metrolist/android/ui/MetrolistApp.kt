@@ -598,7 +598,8 @@ fun MetrolistApp(
             val available =
                 AppUpdateManager.checkAtStartup(
                     context = context,
-                    networkEnabled = Settings.shared.checkForUpdates,
+                    networkEnabled = true,
+                    force = true,
                 )
             if (available == null) {
                 Settings.shared.updatePromptVersion = ""

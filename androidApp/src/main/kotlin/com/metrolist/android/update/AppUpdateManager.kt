@@ -144,6 +144,7 @@ object AppUpdateManager {
     suspend fun checkAtStartup(
         context: Context,
         networkEnabled: Boolean,
+        force: Boolean = false,
     ): GitHubRelease? {
         if (!BuildConfig.UPDATER_ENABLED) return null
         if (Settings.shared.updateCacheSource != CACHE_SOURCE) {
@@ -156,7 +157,7 @@ object AppUpdateManager {
         }
         val now = System.currentTimeMillis()
         val lastAttempt = Settings.shared.lastUpdateCheckAttemptTimestamp
-        val checkIsDue = lastAttempt !in 1..now || now - lastAttempt >= CHECK_INTERVAL_MILLIS
+        val checkIsDue = force || lastAttempt !in 1..now || now - lastAttempt >= CHECK_INTERVAL_MILLIS
         if (networkEnabled && checkIsDue) {
             return check(context, notify = Settings.shared.updateNotifications)
         }

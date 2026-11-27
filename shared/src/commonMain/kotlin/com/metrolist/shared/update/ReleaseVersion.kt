@@ -30,14 +30,14 @@ data class ReleaseVersion(
     }
 
     companion object {
-        private val pattern = Regex("^v?(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-([0-9A-Za-z.-]+))?(?:\\+[0-9A-Za-z.-]+)?$")
+        private val pattern = Regex("^v?(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:\\.(0|[1-9]\\d*))?(?:-([0-9A-Za-z.-]+))?(?:\\+[0-9A-Za-z.-]+)?$")
 
         fun parse(value: String): ReleaseVersion? {
             val match = pattern.matchEntire(value) ?: return null
             return ReleaseVersion(
                 major = match.groupValues[1].toIntOrNull() ?: return null,
                 minor = match.groupValues[2].toIntOrNull() ?: return null,
-                patch = match.groupValues[3].toIntOrNull() ?: return null,
+                patch = match.groupValues[3].toIntOrNull() ?: 0,
                 prerelease =
                     match.groupValues[4]
                         .takeIf(String::isNotEmpty)
